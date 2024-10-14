@@ -8562,13 +8562,14 @@ var EditUser = function EditUser() {
             setDisalbe(false);
             return _context2.abrupt("return", navigate("/users"));
           case 10:
-            _context2.next = 15;
+            _context2.next = 16;
             break;
           case 12:
             _context2.prev = 12;
             _context2.t0 = _context2["catch"](0);
+            console.log(_context2.t0);
             setDisalbe(false);
-          case 15:
+          case 16:
           case "end":
             return _context2.stop();
         }

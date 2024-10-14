@@ -52,6 +52,7 @@ const EditUser = () => {
         return navigate("/users");
       }
     } catch (error) {
+      console.log(error);
       setDisalbe(false);
     }
   };

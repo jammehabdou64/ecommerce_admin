@@ -9,13 +9,13 @@ export class UserSeeder {
         name: "Administrator",
         email: "admin@example.com",
         password: await bcrypt("password"),
-        address: "Busumbala",
+        primary_prone: "7501025",
       },
       {
         name: "User",
         email: "user@example.com",
         password: await bcrypt("password"),
-        address: "Busumbala",
+        primary_phone: "3747825",
       },
     ];
 
