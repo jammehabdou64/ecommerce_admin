@@ -1,0 +1,16 @@
+@extends("layout.app")
+@section("title", "Welcome {{Auth.name}}")
+@section("content")
+    @include("partials.header")
+    <main class="flex justify-center h-[90vh] items-center">
+        <article>
+            <section>
+                <p>
+                    <span>Hi</span>
+                    {{ Auth . name }}
+                </p>
+                <h1>Home</h1>
+            </section>
+        </article>
+    </main>
+@endsection

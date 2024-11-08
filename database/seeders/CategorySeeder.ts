@@ -1,3 +1,4 @@
+import { Category } from "../../app/Models/Category";
 export class CategorySeeder {
   //
 
@@ -12,5 +13,7 @@ export class CategorySeeder {
         description: "Textile",
       },
     ];
+
+    return await Category.create(categories);
   }
 }

@@ -9,16 +9,16 @@ export class UserSeeder {
         name: "Administrator",
         email: "admin@example.com",
         password: await bcrypt("password"),
-        primary_prone: "7501025",
+        primary_phone: "7501025",
       },
       {
-        name: "User",
+        name: "Abdou ",
         email: "user@example.com",
         password: await bcrypt("password"),
         primary_phone: "3747825",
       },
     ];
 
-    await User.create(users);
+    return await User.create(users);
   }
 }

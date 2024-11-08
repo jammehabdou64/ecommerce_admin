@@ -11,8 +11,6 @@ export class Kernel {
   protected middleware = [
     cookieParser(),
     cors(),
-    helmet(),
-    // cookieSession({ keys: ["key1", "key2"] }),
     session({
       secret: "ggggggg",
       resave: false,

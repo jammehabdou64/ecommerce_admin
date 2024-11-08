@@ -1,12 +1,6 @@
-import { UsersController } from "@Controllers/UsersController";
-import { ApiRoute } from "jcc-express-mvc";
+import { User } from "@/Model/User";
+import { ApiRoute } from "jcc-express-mvc/Route";
 
-ApiRoute.prefix("/users")
-  .controller(UsersController)
-  .group((Route) => {
-    Route.get("/", "index");
-    Route.post("/", "store");
-    Route.get("/{user}", "show");
-    Route.patch("/{user}", "update");
-    Route.delete("/{user}", "destroy");
-  });
+ApiRoute.get("/", async function (req, res) {
+  return res.json({ msg: await User.with("hell").get() });
+});

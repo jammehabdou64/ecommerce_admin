@@ -5,7 +5,6 @@ export class Migration {
       table.id();
       table.string("name").unique();
       table.string("description").nullable();
-      table.string("status");
       table.timestamps();
       table.softDeletes();
     });

@@ -2,6 +2,8 @@
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "declaration": true,
+    "declarationMap": true, // Optional, generates source maps for declarations
     "baseUrl": ".",
     "paths": {
       "@/Model/*": ["app/Models/*"],
@@ -11,12 +13,14 @@
       "@/Services/*": ["app/Services/*"]
     },
     "esModuleInterop": true,
-    "outDir": "./dist",
+    "outDir": "./build",
     "strict": true,
     "target": "ES2021",
     "skipLibCheck": true, // Skip type checking of all declaration files (.d.ts)
     "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
-    "resolveJsonModule": true //
+    "resolveJsonModule": true, //
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["**/*"],
   "exclude": ["node_modules"]

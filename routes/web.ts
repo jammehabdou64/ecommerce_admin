@@ -1,3 +1,5 @@
-import { Route } from "jcc-express-mvc";
+import { Route } from "jcc-express-mvc/Route";
 
-Route.get("*", (req, res) => res.render("layout/app"));
+Route.get("*", (req, res) => {
+  return res.render("index");
+});
