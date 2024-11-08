@@ -1,41 +1,54 @@
-import { bcrypt, Auth } from "jcc-express-mvc";
 import { Request, Response, Next } from "jcc-express-mvc/http";
 import { User } from "@/Model/User";
+import { UserRequest } from "@/Request/UserRequest";
 export class UsersController {
   //
 
   async index(req: Request, res: Response, next: Next) {
     return res.json({
-      message: await User.all(),
+      message: await User.paginate(req, 15),
+      success: true,
     });
   }
 
   //
 
   async store(req: Request, res: Response, next: Next) {
-    await req.validate({
-      name: ["required"],
-      email: ["required", "unique:users"],
-      password: ["required", "min:6"],
-    });
+    const userRequest = new UserRequest(req);
+    const save = await userRequest.save();
 
-    const save = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: await bcrypt(req.body.password),
-      primary_phone: "7501035",
-    });
-
-    return save
-      ? Auth.attempt(req, res, next)
-      : res.json({ message: "Invalid credentials" });
+    return save //res.json({ message: save });
+      ? res.json({ message: save, success: true })
+      : res.json({ message: null, success: false });
   }
 
   //
 
   async show(req: Request, res: Response, next: Next) {
     return res.json({
-      message: await User.find(req.params.id),
+      message: await User.find(req.params.user),
+      success: true,
+    });
+  }
+
+  //
+
+  async update(req: Request, res: Response, next: Next) {
+    const userRequest = new UserRequest(req);
+    const save = await userRequest.save();
+    return save
+      ? res.json({
+          message: await save,
+          success: true,
+        })
+      : res.json({ message: null, success: false });
+  }
+
+  //
+
+  async destroy(req: Request, res: Response, next: Next) {
+    return res.json({
+      message: await User.delete(req.params.user),
     });
   }
 }
