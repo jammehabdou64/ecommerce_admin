@@ -42,12 +42,7 @@ const Categories = () => {
         // <Spinner />
         <h1>Loading...</h1>
       ) : (
-        <Table
-          title={"category"}
-          buttonName={"add category"}
-          pathTo={"/categories/create"}
-          data={headers}
-        >
+        <Table columns={headers}>
           {/* <TableHeader headers={headers} /> */}
           <tbody className="bg-white divide-y divide-gray-200">
             {categories.map((category, index) => (

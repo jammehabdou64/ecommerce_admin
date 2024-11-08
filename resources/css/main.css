@@ -45,3 +45,7 @@ body {
 .dropdown-link {
   @apply flex p-2 hover:bg-purple-600 hover:text-white;
 }
+
+.modal-container {
+  background: rgba(0, 0, 0, 0.589);
+}

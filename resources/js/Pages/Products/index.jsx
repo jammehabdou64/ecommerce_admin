@@ -53,12 +53,7 @@ const Products = () => {
       {loading ? (
         <h1>Loading....</h1>
       ) : (
-        <Table
-          title={"products"}
-          buttonName={"add product"}
-          pathTo={"/products/create"}
-          data={headers}
-        >
+        <Table columns={headers}>
           {/* <TableHeader headers={headers} /> */}
           <tbody className="bg-white divide-y divide-gray-200">
             {products.map((product, index) => (

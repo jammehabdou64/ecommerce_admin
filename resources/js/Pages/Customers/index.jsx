@@ -50,12 +50,7 @@ const Customers = () => {
       {loading ? (
         <h1>Loading .....</h1>
       ) : (
-        <Table
-          title={"customers"}
-          buttonName={"add customer"}
-          pathTo={"/customers/create"}
-          data={headers}
-        >
+        <Table columns={headers}>
           {/* <Table headers={headers} /> */}
           <tbody className="bg-white divide-y divide-gray-200">
             {customers.map((customer, index) => (

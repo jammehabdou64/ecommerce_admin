@@ -52,7 +52,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-5 gap-2">
           <div className="sales-chart col-span-3">{/* <SaleChart /> */}</div>
           <div className="active-customers col-span-2">
-            <Table data={["index", "name", "email"]}>
+            <Table columns={["index", "name", "email"]}>
               {/* <TableHeader headers={} /> */}
               <tbody>
                 <tr>

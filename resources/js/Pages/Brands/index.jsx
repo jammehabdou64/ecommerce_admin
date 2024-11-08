@@ -43,12 +43,7 @@ const Brands = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <Table
-          title={"Brands"}
-          buttonName={"add brand"}
-          pathTo={"/admin/brands/create"}
-          data={headers}
-        >
+        <Table columns={headers}>
           {/* <TableHeader headers={headers} /> */}
           <tbody className="bg-white divide-y divide-gray-200">
             {brands.map((brand, index) => (
