@@ -38,6 +38,7 @@ export class UsersController {
   async update(req: Request, res: Response, next: Next) {
     const userRequest = new UserRequest(req);
     const save = await userRequest.save();
+    console.log(save);
     return save
       ? res.json({
           message: await save,

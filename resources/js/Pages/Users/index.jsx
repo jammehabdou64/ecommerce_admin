@@ -5,6 +5,11 @@ import { deleteApi, getApi } from "~/Api";
 import Layout from "~/Components/Layout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import AppContainer from "~/Components/AppContainer";
+import PageHeader from "../../Components/PageHeader";
+import AppButton from "../../Components/AppButton";
+import AppModal from "../../Components/AppModal";
+import CreateUser from "./Create";
+import EditUser from "./Edit";
 
 const Users = () => {
   const headers = [
@@ -20,6 +25,9 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -46,12 +54,42 @@ const Users = () => {
     } catch (error) {}
   };
 
+  const showEditUser = (event, user) => {
+    event.preventDefault();
+    setCurrentUser(user);
+    setOpenEditModal(true);
+    // console.log(openEditModal);
+  };
+
   return (
     <Layout>
       {loading ? (
         <h1>Loading....</h1>
       ) : (
         <AppContainer>
+          <AppModal openModal={openModal}>
+            <CreateUser click={() => setOpenModal(!openModal)} />
+          </AppModal>
+
+          <AppModal openModal={openEditModal}>
+            <EditUser
+              data={currentUser}
+              click={() => setOpenEditModal(false)}
+            />
+          </AppModal>
+
+          <PageHeader title={"Users Page"} />
+          <div>
+            <div className="flex justify-between py-1 items-center">
+              <h4 className="text-2xl font-medium text-gray-600">
+                Users Table
+              </h4>
+              <AppButton
+                title={"New User"}
+                click={() => setOpenModal(!openModal)}
+              />
+            </div>
+          </div>
           <Table columns={headers}>
             <tbody className="bg-white divide-y divide-gray-200">
               {users.data.map((user, index) => (
@@ -81,7 +119,7 @@ const Users = () => {
 
                   <td className="px-6 py-2 mr-2 text-sm leading-5 border">
                     <div className="flex ">
-                      <Link to={"/users/edit/" + user.id}>
+                      <Link to="#" onClick={(e) => showEditUser(e, user)}>
                         <PencilIcon
                           className="text-blue-500 w-6 cursor-pointer mx-3"
                           title="edit"

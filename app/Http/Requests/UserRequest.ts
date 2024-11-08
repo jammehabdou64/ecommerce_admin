@@ -31,7 +31,6 @@ export class UserRequest extends FormRequest {
     user.password = await bcrypt(`${password}`);
     user.primary_phone = primary_phone;
     user.secondary_phone = secondary_phone;
-
     return user.save();
   }
 }

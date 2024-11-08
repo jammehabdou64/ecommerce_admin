@@ -24,7 +24,7 @@ export class CustomersController {
    */
   async index(req: Request, res: Response, next: Next) {
     //
-    return res.json({ message: await this.customer.all(req) });
+    return res.json({ message: await this.customer.all(req), success: true });
   }
 
   /**

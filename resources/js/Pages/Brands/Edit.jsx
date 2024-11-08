@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getApi, patchtApi } from "~/Api";
+import { getApi, patchApi } from "~/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import Layout from "~/Components/Layout";
 
@@ -42,7 +42,7 @@ const EditBrand = () => {
     try {
       e.preventDefault();
       setDisalbe(true);
-      const { data } = await patchtApi(`/admin/brands/${id}`, formData);
+      const { data } = await patchApi(`/admin/brands/${id}`, formData);
       setLoading(false);
       if (data.success) {
         setDisalbe(false);

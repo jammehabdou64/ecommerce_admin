@@ -1,7 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// import Alert from "./Alert";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import TableHeader from "./TableHeader";
 
 const Table = ({ children, columns }) => {

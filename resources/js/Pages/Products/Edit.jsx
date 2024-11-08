@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "~/Components/Layout";
 import { useParams, useNavigate } from "react-router-dom";
-import { getApi, patchtApi, postApi } from "~/Api";
+import { getApi, patchApi, postApi } from "~/Api";
 
 const EditProduct = () => {
   const [categories, setCategory] = useState([]);
@@ -70,7 +70,7 @@ const EditProduct = () => {
       jsFormData.append("threshold", userFormData.threshold);
       jsFormData.append("image", userFormData.image);
       jsFormData.append("description", userFormData.description);
-      const { data } = await patchtApi(`/products/${id}`, jsFormData);
+      const { data } = await patchApi(`/products/${id}`, jsFormData);
 
       if (data.success) {
         setDisalbe(false);

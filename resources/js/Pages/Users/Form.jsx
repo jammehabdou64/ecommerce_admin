@@ -1,38 +1,28 @@
-import React, { useEffect, useState } from "react";
-import Layout from "~/Components/Layout";
-import { useNavigate, useParams } from "react-router-dom";
-import { getApi, patchApi } from "~/Api";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { patchApi, postApi } from "~/Api";
+import AppCloseButton from "../../Components/AppCloseButton";
 
-const EditCustomer = () => {
+const Form = ({ data = null, formUrl, method = "post", click }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    role: "",
     status: "",
-    description: "",
+    primary_phone: "",
+    secondary_phone: "",
   });
-  const { id } = useParams();
 
   useEffect(() => {
-    const getCustomer = async () => {
-      try {
-        const { data } = await getApi(`/admin/customers/${id}`);
-        if (data.success) {
-          const { message } = data;
-          return setFormData({
-            ...formData,
-            name: message?.name || "",
-            email: message?.email || "",
-            role: message?.role || "",
-            status: message?.status || "",
-            description: message?.description || "",
-          });
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getCustomer();
-  }, []);
+    return setFormData({
+      name: data?.name || "",
+      email: data?.email || "",
+      role: data?.role || "",
+      status: data?.status || "",
+      primary_phone: data?.primary_phone || "",
+      secondary_phone: data?.secondary_phone || "",
+    });
+  }, [data]);
 
   const [disable, setDisalbe] = useState(false);
   let navigate = useNavigate();
@@ -44,24 +34,32 @@ const EditCustomer = () => {
     try {
       e.preventDefault();
       setDisalbe(true);
-      const { data } = await patchApi(`/admin/customers/${id}`, formData);
+
+      const { data } =
+        method === "post"
+          ? await postApi(formUrl, formData)
+          : await patchApi(formUrl, formData);
       if (data.success) {
         setDisalbe(false);
-        return navigate("/admin/customers");
+        return navigate("/users");
       }
     } catch (error) {
+      console.log(error);
       setDisalbe(false);
     }
   };
   return (
-    <Layout>
-      <div className="flex items-center h-full">
+    <div className="w-full">
+      <div className="flex w-full items-center h-full">
         <form
           onSubmit={(e) => submit(e)}
-          className="px-12 py-14 flex flex-col w-full md:w-11/12 lg:max-w-2xl  mx-auto mb-4 bg-white"
+          className="px-12 py-8 flex flex-col w-full md:w-11/12 lg:max-w-2xl  mx-auto mb-4 bg-white"
         >
-          <div className="form-header ">
-            <h3 className="font-semibold text-xl">Edit Customer</h3>
+          <div className="form-header flex justify-between">
+            <h3 className="font-medium text-gray-800 text-2xl">
+              {method === "post" ? "New User" : "Edit User"}
+            </h3>
+            <AppCloseButton click={click} />
           </div>
           <div className="grid gap-4 gap-y-2 md:grid-cols-5">
             <div className="md:col-span-6 mt-2">
@@ -73,7 +71,7 @@ const EditCustomer = () => {
                 name="name"
                 value={formData.name}
                 onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full py-2 px-3  border
+                className="mt-1 block w-full p-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
             </div>
@@ -86,44 +84,61 @@ const EditCustomer = () => {
                 name="email"
                 value={formData.email}
                 onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full py-2 px-3  border
+                className="mt-1 block w-full p-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
             </div>
-
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="status" className="text-sm">
-                Status
+              <label htmlFor="role" className="text-sm">
+                Role
               </label>
               <select
-                name="status"
-                id="status"
-                className="mt-1 block w-full max-w-full py-2 px-3  border bg-white
+                name="role"
+                id="role"
+                className="mt-1 block w-full max-w-full p-3  border bg-white
                   border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
-                value={formData.status}
+                value={formData.role}
                 onChange={(e) => inputChange(e)}
               >
                 <option value={""} className="text-gray-400">
-                  select a status
+                  select a role
                 </option>
 
-                <option value="active">active</option>
-                <option value="inactive">inactive</option>
+                <option value="2">user</option>
+                <option value="4">supervisor</option>
+                <option value="6">admin</option>
               </select>
             </div>
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="Category" className="text-sm">
-                Description
+              <label htmlFor="primary-phone" className="text-sm">
+                Primary Phone
               </label>
               <input
                 type="text"
-                name="description"
-                value={formData.description}
+                name="primary_phone"
+                id="primary-phone"
+                value={formData.primary_phone}
                 onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full py-2 px-3  border
+                className="mt-1 block w-full p-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
             </div>
+
+            <div className="md:col-span-6 mt-2">
+              <label htmlFor="secondary-phone" className="text-sm">
+                Secondary Phone
+              </label>
+              <input
+                id="secondary-phone"
+                type="text"
+                name="secondary_phone"
+                value={formData.secondary_phone}
+                onChange={(e) => inputChange(e)}
+                className="mt-1 block w-full p-3  border
+   border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
+              />
+            </div>
+
             <div className="grid grid-cols-2 md:col-span-6 gap-5">
               <div className="mt-2 w-full">
                 <button
@@ -151,8 +166,8 @@ sm:text-sm"
           </div>
         </form>
       </div>
-    </Layout>
+    </div>
   );
 };
 
-export default EditCustomer;
+export default Form;

@@ -12,7 +12,7 @@ export const putApi = async (url, formData) => {
   return Api.put(url, formData);
 };
 
-export const patchtApi = async (url, formData) => {
+export const patchApi = async (url, formData) => {
   return Api.patch(url, formData);
 };
 
