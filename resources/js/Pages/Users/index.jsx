@@ -5,9 +5,9 @@ import { deleteApi, getApi } from "~/Api";
 import Layout from "~/Components/Layout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import AppContainer from "~/Components/AppContainer";
-import PageHeader from "../../Components/PageHeader";
-import AppButton from "../../Components/AppButton";
-import AppModal from "../../Components/AppModal";
+import PageHeader from "~/Components/PageHeader";
+import AppButton from "~/Components/AppButton";
+import AppModal from "~/Components/AppModal";
 import CreateUser from "./Create";
 import EditUser from "./Edit";
 
@@ -58,7 +58,7 @@ const Users = () => {
     event.preventDefault();
     setCurrentUser(user);
     setOpenEditModal(true);
-    // console.log(openEditModal);
+    return;
   };
 
   return (

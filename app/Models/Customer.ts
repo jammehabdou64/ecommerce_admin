@@ -6,8 +6,7 @@ export class Customer extends Model {
   protected static hidden: string[] = ["deleted_at"];
 
   protected static casts = {
-    created_at: "now",
-    updated_at: "date:d-m-y",
+    created_at: "date:d-m-y",
     getName: this.getName,
   };
 

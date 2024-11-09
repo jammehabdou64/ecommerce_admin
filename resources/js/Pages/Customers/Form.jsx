@@ -3,29 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { patchApi, postApi } from "~/Api";
 import AppCloseButton from "~/Components/AppCloseButton";
 
-const Form = ({ data = null, formUrl, method = "post", click }) => {
+const Form = ({ data = null, method = "post", click }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    role: "",
-    status: "",
-    primary_phone: "",
-    secondary_phone: "",
+    address: "",
+    phone: "",
   });
-
-  useEffect(() => {
-    return setFormData({
-      name: data?.name || "",
-      email: data?.email || "",
-      role: data?.role || "",
-      status: data?.status || "",
-      primary_phone: data?.primary_phone || "",
-      secondary_phone: data?.secondary_phone || "",
-    });
-  }, [data]);
 
   const [disable, setDisalbe] = useState(false);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    return setFormData({
+      ...formData,
+      name: data?.name || "",
+      email: data?.email || "",
+      address: data?.address || "",
+      phone: data?.phone || "",
+    });
+  }, [data]);
 
   const inputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,31 +30,32 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
   const submit = async (e) => {
     try {
       e.preventDefault();
+      const url = method === "post" ? "/customers" : `/customers/${data.id}`;
       setDisalbe(true);
 
       const { data } =
         method === "post"
-          ? await postApi(formUrl, formData)
-          : await patchApi(formUrl, formData);
+          ? await postApi(url, formData)
+          : await patchApi(url, formData);
+
       if (data.success) {
         setDisalbe(false);
-        return navigate("/users");
+        return navigate("/customers");
       }
     } catch (error) {
-      console.log(error);
       setDisalbe(false);
     }
   };
   return (
     <div className="w-full">
-      <div className="flex w-full items-center h-full">
+      <div className="flex items-center h-full">
         <form
           onSubmit={(e) => submit(e)}
           className="px-12 py-8 flex flex-col w-full md:w-11/12 lg:max-w-2xl  mx-auto mb-4 bg-white"
         >
           <div className="form-header flex justify-between">
             <h3 className="font-medium text-gray-800 text-2xl">
-              {method === "post" ? "New User" : "Edit User"}
+              {method === "post" ? "New Customer" : "Edit Customer"}
             </h3>
             <AppCloseButton click={click} />
           </div>
@@ -71,7 +69,7 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
                 name="name"
                 value={formData.name}
                 onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full p-3  border
+                className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
             </div>
@@ -84,61 +82,37 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
                 name="email"
                 value={formData.email}
                 onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full p-3  border
+                className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
             </div>
-            <div className="md:col-span-6 mt-2">
-              <label htmlFor="role" className="text-sm">
-                Role
-              </label>
-              <select
-                name="role"
-                id="role"
-                className="mt-1 block w-full max-w-full p-3  border bg-white
-                  border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
-                value={formData.role}
-                onChange={(e) => inputChange(e)}
-              >
-                <option value={""} className="text-gray-400">
-                  select a role
-                </option>
 
-                <option value="2">user</option>
-                <option value="4">supervisor</option>
-                <option value="6">admin</option>
-              </select>
-            </div>
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="primary-phone" className="text-sm">
-                Primary Phone
+              <label htmlFor="Category" className="text-sm">
+                Address
               </label>
               <input
                 type="text"
-                name="primary_phone"
-                id="primary-phone"
-                value={formData.primary_phone}
+                name="address"
+                value={formData.address}
                 onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full p-3  border
+                className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
             </div>
-
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="secondary-phone" className="text-sm">
-                Secondary Phone
+              <label htmlFor="Category" className="text-sm">
+                Phone
               </label>
               <input
-                id="secondary-phone"
                 type="text"
-                name="secondary_phone"
-                value={formData.secondary_phone}
+                name="phone"
+                value={formData.phone}
                 onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full p-3  border
+                className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
             </div>
-
             <div className="grid grid-cols-2 md:col-span-6 gap-5">
               <div className="mt-2 w-full">
                 <button

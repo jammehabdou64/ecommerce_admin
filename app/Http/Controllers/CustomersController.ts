@@ -1,3 +1,4 @@
+import { CustomerRequest } from "@/Request/CustomerRequest";
 import { CustomerService } from "@/Services/CustomerService";
 import { Inject } from "jcc-express-mvc/Dependency";
 import { Request, Response, Next } from "jcc-express-mvc/http";
@@ -32,8 +33,14 @@ export class CustomersController {
    *@access public
    * @return Express Request Response
    */
-  store(req: Request, res: Response, next: Next) {
+  async store(req: Request, res: Response, next: Next) {
     //
+    const customerRequest = new CustomerRequest(req);
+    const save = await customerRequest.save();
+
+    return save //res.json({ message: save });
+      ? res.json({ message: save, success: true })
+      : res.json({ message: null, success: false });
   }
 
   /**
