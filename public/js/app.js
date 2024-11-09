@@ -6806,10 +6806,14 @@ var Form = function Form(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     formData = _useState2[0],
     setFormData = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    disable = _useState4[0],
-    setDisalbe = _useState4[1];
+    formError = _useState4[0],
+    setFormError = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    disable = _useState6[0],
+    setDisalbe = _useState6[1];
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
@@ -6824,7 +6828,7 @@ var Form = function Form(_ref) {
   };
   var submit = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
-      var url, _ref3, _data;
+      var url, _ref3, _data, _error$response$data, erros;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -6857,13 +6861,15 @@ var Form = function Form(_ref) {
             setDisalbe(false);
             return _context.abrupt("return", navigate("/customers"));
           case 18:
-            _context.next = 23;
+            _context.next = 25;
             break;
           case 20:
             _context.prev = 20;
             _context.t1 = _context["catch"](0);
+            erros = ((_error$response$data = _context.t1.response.data) === null || _error$response$data === void 0 ? void 0 : _error$response$data.errors) || [];
+            console.log(erros[0]);
             setDisalbe(false);
-          case 23:
+          case 25:
           case "end":
             return _context.stop();
         }
@@ -6895,10 +6901,11 @@ var Form = function Form(_ref) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "md:col-span-6 mt-2",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              htmlFor: "Category",
+              htmlFor: "name",
               className: "text-sm",
               children: "Name"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              id: "name",
               type: "text",
               name: "name",
               value: formData.name,
@@ -6906,14 +6913,18 @@ var Form = function Form(_ref) {
                 return inputChange(e);
               },
               className: "mt-1 block w-full py-2 px-3  border border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
+              className: "".concat(formError !== null && formError !== void 0 && formError.name ? "inline-block" : "hidden", " text-red-500 text-sm"),
+              children: formError === null || formError === void 0 ? void 0 : formError.name
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "md:col-span-6 mt-2",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              htmlFor: "Category",
+              htmlFor: "email",
               className: "text-sm",
               children: "Email"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              id: "email",
               type: "text",
               name: "email",
               value: formData.email,
@@ -6921,14 +6932,18 @@ var Form = function Form(_ref) {
                 return inputChange(e);
               },
               className: "mt-1 block w-full py-2 px-3  border border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
+              className: "".concat(formError !== null && formError !== void 0 && formError.email ? "inline-block" : "hidden", " text-red-500 text-sm"),
+              children: formError === null || formError === void 0 ? void 0 : formError.email
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "md:col-span-6 mt-2",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              htmlFor: "Category",
+              htmlFor: "address",
               className: "text-sm",
               children: "Address"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              id: "address",
               type: "text",
               name: "address",
               value: formData.address,
@@ -6936,14 +6951,18 @@ var Form = function Form(_ref) {
                 return inputChange(e);
               },
               className: "mt-1 block w-full py-2 px-3  border border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
+              className: "".concat(formError !== null && formError !== void 0 && formError.address ? "inline-block" : "hidden", " text-red-500 text-sm"),
+              children: formError === null || formError === void 0 ? void 0 : formError.address
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "md:col-span-6 mt-2",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              htmlFor: "Category",
+              htmlFor: "phone",
               className: "text-sm",
               children: "Phone"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              id: "phone",
               type: "text",
               name: "phone",
               value: formData.phone,
@@ -6951,6 +6970,9 @@ var Form = function Form(_ref) {
                 return inputChange(e);
               },
               className: "mt-1 block w-full py-2 px-3  border border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
+              className: "".concat(formError !== null && formError !== void 0 && formError.phone ? "inline-block" : "hidden", " text-red-500 text-sm"),
+              children: formError === null || formError === void 0 ? void 0 : formError.phone
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "grid grid-cols-2 md:col-span-6 gap-5",

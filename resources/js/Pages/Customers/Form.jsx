@@ -11,6 +11,7 @@ const Form = ({ data = null, method = "post", click }) => {
     phone: "",
   });
 
+  const [formError, setFormError] = useState(null);
   const [disable, setDisalbe] = useState(false);
   let navigate = useNavigate();
 
@@ -43,6 +44,8 @@ const Form = ({ data = null, method = "post", click }) => {
         return navigate("/customers");
       }
     } catch (error) {
+      const erros = error.response.data?.errors || [];
+      console.log(erros[0]);
       setDisalbe(false);
     }
   };
@@ -61,10 +64,11 @@ const Form = ({ data = null, method = "post", click }) => {
           </div>
           <div className="grid gap-4 gap-y-2 md:grid-cols-5">
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="Category" className="text-sm">
+              <label htmlFor="name" className="text-sm">
                 Name
               </label>
               <input
+                id="name"
                 type="text"
                 name="name"
                 value={formData.name}
@@ -72,12 +76,18 @@ const Form = ({ data = null, method = "post", click }) => {
                 className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
+              <small
+                className={`${formError?.name ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.name}
+              </small>
             </div>
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="Category" className="text-sm">
+              <label htmlFor="email" className="text-sm">
                 Email
               </label>
               <input
+                id="email"
                 type="text"
                 name="email"
                 value={formData.email}
@@ -85,13 +95,19 @@ const Form = ({ data = null, method = "post", click }) => {
                 className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
+              <small
+                className={`${formError?.email ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.email}
+              </small>
             </div>
 
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="Category" className="text-sm">
+              <label htmlFor="address" className="text-sm">
                 Address
               </label>
               <input
+                id="address"
                 type="text"
                 name="address"
                 value={formData.address}
@@ -99,12 +115,18 @@ const Form = ({ data = null, method = "post", click }) => {
                 className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
+              <small
+                className={`${formError?.address ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.address}
+              </small>
             </div>
             <div className="md:col-span-6 mt-2">
-              <label htmlFor="Category" className="text-sm">
+              <label htmlFor="phone" className="text-sm">
                 Phone
               </label>
               <input
+                id="phone"
                 type="text"
                 name="phone"
                 value={formData.phone}
@@ -112,6 +134,11 @@ const Form = ({ data = null, method = "post", click }) => {
                 className="mt-1 block w-full py-2 px-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
+              <small
+                className={`${formError?.phone ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.phone}
+              </small>
             </div>
             <div className="grid grid-cols-2 md:col-span-6 gap-5">
               <div className="mt-2 w-full">
