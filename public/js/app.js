@@ -6712,7 +6712,8 @@ var CreateCustomer = function CreateCustomer(_ref) {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Form__WEBPACK_IMPORTED_MODULE_0__["default"], {
       data: null,
       method: "post",
-      click: click
+      click: click,
+      formUrl: "/customers"
     })]
   });
 };
@@ -6744,9 +6745,9 @@ var EditCustomer = function EditCustomer(_ref) {
       children: "Edit User"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Form__WEBPACK_IMPORTED_MODULE_0__["default"], {
       data: data,
-      formUrl: "/users/".concat(data === null || data === void 0 ? void 0 : data.id),
       method: "patch",
-      click: click
+      click: click,
+      formUrl: "/customers/".concat(data === null || data === void 0 ? void 0 : data.id)
     })]
   });
 };
@@ -6796,6 +6797,7 @@ var Form = function Form(_ref) {
     data = _ref$data === void 0 ? null : _ref$data,
     _ref$method = _ref.method,
     method = _ref$method === void 0 ? "post" : _ref$method,
+    formUrl = _ref.formUrl,
     click = _ref.click;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       name: "",
@@ -6828,52 +6830,51 @@ var Form = function Form(_ref) {
   };
   var submit = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
-      var url, _ref3, _data, _error$response$data, erros;
+      var _ref3, _data, _error$response, erros;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
             e.preventDefault();
-            url = method === "post" ? "/customers" : "/customers/".concat(_data.id);
             setDisalbe(true);
             if (!(method === "post")) {
-              _context.next = 10;
+              _context.next = 9;
               break;
             }
-            _context.next = 7;
-            return (0,_Api__WEBPACK_IMPORTED_MODULE_1__.postApi)(url, formData);
-          case 7:
+            _context.next = 6;
+            return (0,_Api__WEBPACK_IMPORTED_MODULE_1__.postApi)(formUrl, formData);
+          case 6:
             _context.t0 = _context.sent;
-            _context.next = 13;
-            break;
-          case 10:
             _context.next = 12;
-            return (0,_Api__WEBPACK_IMPORTED_MODULE_1__.patchApi)(url, formData);
-          case 12:
+            break;
+          case 9:
+            _context.next = 11;
+            return (0,_Api__WEBPACK_IMPORTED_MODULE_1__.patchApi)(formUrl, formData);
+          case 11:
             _context.t0 = _context.sent;
-          case 13:
+          case 12:
             _ref3 = _context.t0;
             _data = _ref3.data;
             if (!_data.success) {
-              _context.next = 18;
+              _context.next = 17;
               break;
             }
             setDisalbe(false);
             return _context.abrupt("return", navigate("/customers"));
-          case 18:
-            _context.next = 25;
+          case 17:
+            _context.next = 24;
             break;
-          case 20:
-            _context.prev = 20;
+          case 19:
+            _context.prev = 19;
             _context.t1 = _context["catch"](0);
-            erros = ((_error$response$data = _context.t1.response.data) === null || _error$response$data === void 0 ? void 0 : _error$response$data.errors) || [];
-            console.log(erros[0]);
+            erros = ((_error$response = _context.t1.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.errors) || [];
+            setFormError(erros[0]);
             setDisalbe(false);
-          case 25:
+          case 24:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 20]]);
+      }, _callee, null, [[0, 19]]);
     }));
     return function submit(_x) {
       return _ref2.apply(this, arguments);
@@ -6939,25 +6940,6 @@ var Form = function Form(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "md:col-span-6 mt-2",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              htmlFor: "address",
-              className: "text-sm",
-              children: "Address"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              id: "address",
-              type: "text",
-              name: "address",
-              value: formData.address,
-              onChange: function onChange(e) {
-                return inputChange(e);
-              },
-              className: "mt-1 block w-full py-2 px-3  border border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
-              className: "".concat(formError !== null && formError !== void 0 && formError.address ? "inline-block" : "hidden", " text-red-500 text-sm"),
-              children: formError === null || formError === void 0 ? void 0 : formError.address
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "md:col-span-6 mt-2",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
               htmlFor: "phone",
               className: "text-sm",
               children: "Phone"
@@ -6975,6 +6957,25 @@ var Form = function Form(_ref) {
               children: formError === null || formError === void 0 ? void 0 : formError.phone
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "md:col-span-6 mt-2",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              htmlFor: "address",
+              className: "text-sm",
+              children: "Address"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              id: "address",
+              type: "text",
+              name: "address",
+              value: formData.address,
+              onChange: function onChange(e) {
+                return inputChange(e);
+              },
+              className: "mt-1 block w-full py-2 px-3  border border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
+              className: "".concat(formError !== null && formError !== void 0 && formError.address ? "inline-block" : "hidden", " text-red-500 text-sm"),
+              children: formError === null || formError === void 0 ? void 0 : formError.address
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "grid grid-cols-2 md:col-span-6 gap-5",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "mt-2 w-full",
@@ -6986,7 +6987,6 @@ var Form = function Form(_ref) {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "mt-2 ",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                type: "submit",
                 className: "mt-1 w-full block text-white   py-3 px-4 border\nborder-gray-300  rounded-md focus:outline-none focus:ring-gray-100 focus:border-gray-300\nsm:text-sm",
                 style: {
                   backgroundColor: "#1e2c4c"

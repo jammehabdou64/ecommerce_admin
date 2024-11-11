@@ -26,8 +26,8 @@ export class CustomerRequest extends FormRequest {
     await this.rules();
     const { name, email, phone, address } = { ...this.request() };
     const customer: any = this.route("customer")
-      ? new Customer()
-      : await Customer.find(this.route("customer"));
+      ? await Customer.find(this.route("customer"))
+      : new Customer();
     customer.name = name;
     customer.email = email;
     customer.phone = phone;

@@ -1,8 +1,8 @@
+import { ApiRoute } from "jcc-express-mvc/Route";
 import { CategoriesController } from "@Controllers/CategoriesController";
 import { CustomersController } from "@Controllers/CustomersController";
 import { ProductsController } from "@Controllers/ProductsController";
 import { UsersController } from "@Controllers/UsersController";
-import { ApiRoute } from "jcc-express-mvc/Route";
 
 ApiRoute.prefix("/users")
   .controller(UsersController)

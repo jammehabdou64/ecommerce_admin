@@ -6,9 +6,9 @@ const EditCustomer = ({ click, data }) => {
       <h1>Edit User</h1>
       <Form
         data={data}
-        formUrl={`/users/${data?.id}`}
         method="patch"
         click={click}
+        formUrl={`/customers/${data?.id}`}
       />
     </div>
   );

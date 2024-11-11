@@ -12,6 +12,7 @@ module.exports = {
       colors: {
         secondary: "rgba(124, 153, 5, 1)",
         dark: "#1e2136",
+        "btn-dark": "#1e2c4c",
       },
       screens: {
         xs: "350px",

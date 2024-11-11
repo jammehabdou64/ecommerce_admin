@@ -8,10 +8,7 @@ export class AppServiceProvider extends ServiceProvider {
   }
 
   public register(): void {
-    this.app.bind<CustomerService>(
-      "CustomerService",
-      () => new CustomerService(),
-    );
+    this.app.bind<CustomerService>("Customer", () => new CustomerService());
   }
 
   public boot(): void {}

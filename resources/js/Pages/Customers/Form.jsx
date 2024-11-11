@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { patchApi, postApi } from "~/Api";
 import AppCloseButton from "~/Components/AppCloseButton";
 
-const Form = ({ data = null, method = "post", click }) => {
+const Form = ({ data = null, method = "post", formUrl, click }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,21 +31,19 @@ const Form = ({ data = null, method = "post", click }) => {
   const submit = async (e) => {
     try {
       e.preventDefault();
-      const url = method === "post" ? "/customers" : `/customers/${data.id}`;
       setDisalbe(true);
 
       const { data } =
         method === "post"
-          ? await postApi(url, formData)
-          : await patchApi(url, formData);
-
+          ? await postApi(formUrl, formData)
+          : await patchApi(formUrl, formData);
       if (data.success) {
         setDisalbe(false);
         return navigate("/customers");
       }
     } catch (error) {
-      const erros = error.response.data?.errors || [];
-      console.log(erros[0]);
+      const erros = error.response?.data?.errors || [];
+      setFormError(erros[0]);
       setDisalbe(false);
     }
   };
@@ -101,26 +99,6 @@ const Form = ({ data = null, method = "post", click }) => {
                 {formError?.email}
               </small>
             </div>
-
-            <div className="md:col-span-6 mt-2">
-              <label htmlFor="address" className="text-sm">
-                Address
-              </label>
-              <input
-                id="address"
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={(e) => inputChange(e)}
-                className="mt-1 block w-full py-2 px-3  border
-   border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
-              />
-              <small
-                className={`${formError?.address ? "inline-block" : "hidden"} text-red-500 text-sm`}
-              >
-                {formError?.address}
-              </small>
-            </div>
             <div className="md:col-span-6 mt-2">
               <label htmlFor="phone" className="text-sm">
                 Phone
@@ -140,6 +118,26 @@ const Form = ({ data = null, method = "post", click }) => {
                 {formError?.phone}
               </small>
             </div>
+            <div className="md:col-span-6 mt-2">
+              <label htmlFor="address" className="text-sm">
+                Address
+              </label>
+              <input
+                id="address"
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={(e) => inputChange(e)}
+                className="mt-1 block w-full py-2 px-3  border
+   border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
+              />
+              <small
+                className={`${formError?.address ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.address}
+              </small>
+            </div>
+
             <div className="grid grid-cols-2 md:col-span-6 gap-5">
               <div className="mt-2 w-full">
                 <button
@@ -153,7 +151,6 @@ sm:text-sm bg-red-900"
 
               <div className="mt-2 ">
                 <button
-                  type="submit"
                   className="mt-1 w-full block text-white   py-3 px-4 border
 border-gray-300  rounded-md focus:outline-none focus:ring-gray-100 focus:border-gray-300
 sm:text-sm"

@@ -8,7 +8,7 @@ export class UsersController {
 
   async index(req: Request, res: Response, next: Next) {
     return res.json({
-      message: await User.paginate(req, 15),
+      message: await User.where("id", 1).paginate(req, 15),
       success: true,
     });
   }
@@ -38,7 +38,6 @@ export class UsersController {
   async update(req: Request, res: Response, next: Next) {
     const userRequest = new UserRequest(req);
     const save = await userRequest.save();
-    console.log(save);
     return save
       ? res.json({
           message: await save,
