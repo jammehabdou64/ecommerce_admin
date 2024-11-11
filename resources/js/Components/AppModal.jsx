@@ -1,4 +1,4 @@
-const AppModal = ({ children, openModal }) => {
+const AppModal = ({ children, openModal = false }) => {
   return (
     <div
       className={`${openModal ? "block" : "hidden"} fixed top-0 left-0 w-full h-screen modal-container`}

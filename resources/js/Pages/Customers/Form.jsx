@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { patchApi, postApi } from "~/Api";
 import AppCloseButton from "~/Components/AppCloseButton";
+import { useModal } from "../../Reducers/modalReducer";
 
 const Form = ({ data = null, method = "post", formUrl, click }) => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Form = ({ data = null, method = "post", formUrl, click }) => {
   const [formError, setFormError] = useState(null);
   const [disable, setDisalbe] = useState(false);
   let navigate = useNavigate();
+  const { state, dispatch } = useModal();
 
   useEffect(() => {
     return setFormData({
@@ -38,8 +40,9 @@ const Form = ({ data = null, method = "post", formUrl, click }) => {
           ? await postApi(formUrl, formData)
           : await patchApi(formUrl, formData);
       if (data.success) {
+        dispatch({ type: method === "post" ? "closeModal" : "closeEditModal" });
         setDisalbe(false);
-        return navigate("/customers");
+        navigate("/customers");
       }
     } catch (error) {
       const erros = error.response?.data?.errors || [];

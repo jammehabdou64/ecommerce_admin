@@ -10,6 +10,7 @@ import AppButton from "~/Components/AppButton";
 import AppModal from "~/Components/AppModal";
 import CreateCustomer from "./Create";
 import EditCustomer from "./Edit";
+import { useModal } from "../../Reducers/modalReducer";
 
 const Customers = () => {
   const headers = [
@@ -26,7 +27,9 @@ const Customers = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [currentCustomer, setCurrentCustomer] = useState(null);
+  const { state, dispatch } = useModal();
 
+  console.log(state);
   useEffect(() => {
     const getCustomers = async () => {
       try {
@@ -57,7 +60,7 @@ const Customers = () => {
   const showEditCustomer = (event, customer) => {
     event.preventDefault();
     setCurrentCustomer(customer);
-    setOpenEditModal(true);
+    dispatch({ type: "openEditModal" });
     return;
   };
 
@@ -67,14 +70,14 @@ const Customers = () => {
         <h1>Loading .....</h1>
       ) : (
         <AppContainer>
-          <AppModal openModal={openModal}>
-            <CreateCustomer click={() => setOpenModal(!openModal)} />
+          <AppModal openModal={state.isModalOpen}>
+            <CreateCustomer click={() => dispatch({ type: "closeModal" })} />
           </AppModal>
 
-          <AppModal openModal={openEditModal}>
+          <AppModal openModal={state.isEditModalOpen}>
             <EditCustomer
               data={currentCustomer}
-              click={() => setOpenEditModal(false)}
+              click={() => dispatch({ type: "closeEditModal" })}
             />
           </AppModal>
           <PageHeader title={"Customer Page"} />
@@ -85,7 +88,7 @@ const Customers = () => {
               </h4>
               <AppButton
                 title={"New Customer"}
-                click={() => setOpenModal(!openModal)}
+                click={() => dispatch({ type: "openModal" })}
               />
             </div>
           </div>

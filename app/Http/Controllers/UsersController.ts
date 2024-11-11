@@ -8,7 +8,7 @@ export class UsersController {
 
   async index(req: Request, res: Response, next: Next) {
     return res.json({
-      message: await User.where("id", 1).paginate(req, 15),
+      message: await User.latest("id").paginate(req, 15),
       success: true,
     });
   }
