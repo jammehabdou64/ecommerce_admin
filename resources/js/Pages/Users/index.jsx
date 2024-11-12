@@ -71,7 +71,7 @@ const Users = () => {
             <CreateUser click={() => setOpenModal(!openModal)} />
           </AppModal>
 
-          <AppModal openModal={openEditModal}>
+          <AppModal openModal={state.isEditModalOpen}>
             <EditUser
               data={currentUser}
               click={() => setOpenEditModal(false)}
