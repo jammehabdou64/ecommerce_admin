@@ -10,6 +10,7 @@ import AppButton from "~/Components/AppButton";
 import AppModal from "~/Components/AppModal";
 import CreateUser from "./Create";
 import EditUser from "./Edit";
+import { useModal } from "~/Reducers/modalReducer";
 
 const Users = () => {
   const headers = [
@@ -24,6 +25,8 @@ const Users = () => {
   ];
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { state, dispatch } = useModal();
 
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -57,7 +60,7 @@ const Users = () => {
   const showEditUser = (event, user) => {
     event.preventDefault();
     setCurrentUser(user);
-    setOpenEditModal(true);
+    dispatch({ type: "openEditModal" });
     return;
   };
 
@@ -67,15 +70,12 @@ const Users = () => {
         <h1>Loading....</h1>
       ) : (
         <AppContainer>
-          <AppModal openModal={openModal}>
-            <CreateUser click={() => setOpenModal(!openModal)} />
+          <AppModal openModal={state.isModalOpen}>
+            <CreateUser />
           </AppModal>
 
           <AppModal openModal={state.isEditModalOpen}>
-            <EditUser
-              data={currentUser}
-              click={() => setOpenEditModal(false)}
-            />
+            <EditUser data={currentUser} />
           </AppModal>
 
           <PageHeader title={"Users Page"} />
@@ -86,7 +86,7 @@ const Users = () => {
               </h4>
               <AppButton
                 title={"New User"}
-                click={() => setOpenModal(!openModal)}
+                click={() => dispatch({ type: "openModal" })}
               />
             </div>
           </div>

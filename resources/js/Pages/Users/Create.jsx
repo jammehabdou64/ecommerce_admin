@@ -1,10 +1,10 @@
 import Form from "./Form";
 
-const CreateUser = ({ click }) => {
+const CreateUser = () => {
   return (
     <div className="flex items-center h-full">
       <h1>Create User</h1>
-      <Form data={null} formUrl={"/users"} method="post" click={click} />
+      <Form data={null} formUrl={"/users"} method="post" />
     </div>
   );
 };

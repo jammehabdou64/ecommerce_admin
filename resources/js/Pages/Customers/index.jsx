@@ -24,19 +24,15 @@ const Customers = () => {
   ];
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
-  const [openEditModal, setOpenEditModal] = useState(false);
   const [currentCustomer, setCurrentCustomer] = useState(null);
   const { state, dispatch } = useModal();
 
-  console.log(state);
   useEffect(() => {
     const getCustomers = async () => {
       try {
         const { data } = await getApi("/customers");
         setLoading(false);
         if (data.success) {
-          // return console.log(data?.message);
           return setCustomers(data.message);
         }
       } catch (error) {

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { patchApi, postApi } from "~/Api";
 import AppCloseButton from "~/Components/AppCloseButton";
+import { useModal } from "~/Reducers/modalReducer";
 
-const Form = ({ data = null, formUrl, method = "post", click }) => {
+const Form = ({ data = null, formUrl, method = "post" }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,6 +26,8 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
   }, [data]);
 
   const [disable, setDisalbe] = useState(false);
+  const [formError, setFormError] = useState(null);
+  const { dispatch } = useModal();
   let navigate = useNavigate();
 
   const inputChange = (e) =>
@@ -41,15 +44,18 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
           : await patchApi(formUrl, formData);
       if (data.success) {
         setDisalbe(false);
-        return navigate("/users");
+        dispatch({ type: method === "post" ? "closeModal" : "closeEditModal" });
+        navigate("/users");
       }
     } catch (error) {
-      console.log(error);
+      const erros = error.response?.data?.errors || [];
+      setFormError(erros[0]);
       setDisalbe(false);
     }
   };
+  // childNodes
   return (
-    <div className="w-full">
+    <div className="w-full" id="form">
       <div className="flex w-full items-center h-full">
         <form
           onSubmit={(e) => submit(e)}
@@ -59,7 +65,13 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
             <h3 className="font-medium text-gray-800 text-2xl">
               {method === "post" ? "New User" : "Edit User"}
             </h3>
-            <AppCloseButton click={click} />
+            <AppCloseButton
+              click={() =>
+                dispatch({
+                  type: method === "post" ? "closeModal" : "closeEditModal",
+                })
+              }
+            />
           </div>
           <div className="grid gap-4 gap-y-2 md:grid-cols-5">
             <div className="md:col-span-6 mt-2">
@@ -74,6 +86,11 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
                 className="mt-1 block w-full p-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
+              <small
+                className={`${formError?.name ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.name}
+              </small>
             </div>
             <div className="md:col-span-6 mt-2">
               <label htmlFor="Category" className="text-sm">
@@ -87,6 +104,11 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
                 className="mt-1 block w-full p-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
+              <small
+                className={`${formError?.email ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.email}
+              </small>
             </div>
             <div className="md:col-span-6 mt-2">
               <label htmlFor="role" className="text-sm">
@@ -108,6 +130,11 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
                 <option value="4">supervisor</option>
                 <option value="6">admin</option>
               </select>
+              <small
+                className={`${formError?.role ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.role}
+              </small>
             </div>
             <div className="md:col-span-6 mt-2">
               <label htmlFor="primary-phone" className="text-sm">
@@ -122,6 +149,11 @@ const Form = ({ data = null, formUrl, method = "post", click }) => {
                 className="mt-1 block w-full p-3  border
    border-gray-300 rounded-md ocus:outline-none focus:ring-gray-100 focus:border-gray-300 sm:text-sm"
               />
+              <small
+                className={`${formError?.primary_phone ? "inline-block" : "hidden"} text-red-500 text-sm`}
+              >
+                {formError?.primary_phone}
+              </small>
             </div>
 
             <div className="md:col-span-6 mt-2">

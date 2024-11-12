@@ -4,7 +4,7 @@ import { patchApi, postApi } from "~/Api";
 import AppCloseButton from "~/Components/AppCloseButton";
 import { useModal } from "../../Reducers/modalReducer";
 
-const Form = ({ data = null, method = "post", formUrl, click }) => {
+const Form = ({ data = null, method = "post", formUrl }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,7 +15,7 @@ const Form = ({ data = null, method = "post", formUrl, click }) => {
   const [formError, setFormError] = useState(null);
   const [disable, setDisalbe] = useState(false);
   let navigate = useNavigate();
-  const { state, dispatch } = useModal();
+  const { dispatch } = useModal();
 
   useEffect(() => {
     return setFormData({
@@ -61,7 +61,13 @@ const Form = ({ data = null, method = "post", formUrl, click }) => {
             <h3 className="font-medium text-gray-800 text-2xl">
               {method === "post" ? "New Customer" : "Edit Customer"}
             </h3>
-            <AppCloseButton click={click} />
+            <AppCloseButton
+              click={() =>
+                dispatch({
+                  type: method === "post" ? "closeModal" : "closeEditModal",
+                })
+              }
+            />
           </div>
           <div className="grid gap-4 gap-y-2 md:grid-cols-5">
             <div className="md:col-span-6 mt-2">
