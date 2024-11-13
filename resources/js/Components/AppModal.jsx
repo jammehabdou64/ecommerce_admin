@@ -10,13 +10,13 @@ const AppModal = ({ children, openModal = false }) => {
     }
   }, [openModal]);
 
-  const handleClick = (event) => {
-    console.dir(event.target.closet);
-  };
+  // const handleClick = (event) => {
+  //   console.dir(event.target.closet);
+  // };
 
   return (
     <div
-      onClick={handleClick}
+      // onClick={handleClick}
       className={`${isOpen ? "block" : "hidden"} fixed top-0 left-0 w-full h-screen modal-container`}
     >
       <div className="h-full min-w-[500px]" id="modal-wrapper" ref={modalRef}>

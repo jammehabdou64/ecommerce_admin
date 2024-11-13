@@ -40,7 +40,7 @@ export class CustomersController {
     const save = await customerRequest.save();
 
     return save //res.json({ message: save });
-      ? res.json({ message: save, success: true })
+      ? res.json({ message: "Customer successfully added!", success: true })
       : res.json({ message: null, success: false });
   }
 
@@ -66,7 +66,7 @@ export class CustomersController {
     const save = await customerRequest.save();
 
     return save //res.json({ message: save });
-      ? res.json({ message: save, success: true })
+      ? res.json({ message: "Customer successfully updated!", success: true })
       : res.json({ message: null, success: false });
   }
 

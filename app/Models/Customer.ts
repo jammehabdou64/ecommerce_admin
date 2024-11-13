@@ -11,6 +11,6 @@ export class Customer extends Model {
   };
 
   static getName(value: string) {
-    return `${value}`.toUpperCase();
+    return `${value}`.toLowerCase();
   }
 }

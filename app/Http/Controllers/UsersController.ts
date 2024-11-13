@@ -20,7 +20,7 @@ export class UsersController {
     const save = await userRequest.save();
 
     return save //res.json({ message: save });
-      ? res.json({ message: save, success: true })
+      ? res.json({ message: "User successfully added!", success: true })
       : res.json({ message: null, success: false });
   }
 
@@ -40,7 +40,7 @@ export class UsersController {
     const save = await userRequest.save();
     return save
       ? res.json({
-          message: await save,
+          message: "User successfully updated!",
           success: true,
         })
       : res.json({ message: null, success: false });

@@ -43,41 +43,4 @@ export const ModalProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the ModalContext
 export const useModal = () => useContext(ModalContext);
-
-/*export const INITIAL_STATE = {
-  openCreateModal: false,
-  openEditModal: false,
-};
-
-export const modalReducer = (state, action) => {
-  switch (action.type) {
-    case "openModal":
-      return {
-        ...state,
-        openCreateModal: true,
-      };
-
-    case "closeModal":
-      return {
-        ...state,
-        openCreateModal: false,
-      };
-    case "openEditModal":
-      return {
-        ...state,
-        openEditModal: true,
-      };
-
-    case "closeEditModal":
-      return {
-        ...state,
-        openEditModal: false,
-      };
-
-    default:
-      return state;
-  }
-};
-*/

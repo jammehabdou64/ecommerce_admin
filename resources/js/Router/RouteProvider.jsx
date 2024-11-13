@@ -2,11 +2,14 @@ import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { router } from ".";
 import { ModalProvider } from "../Reducers/modalReducer";
+import { AlertProvider } from "../Reducers/AlertReducer";
 
 const RouteProvider = () => {
   return (
     <ModalProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <AlertProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </AlertProvider>
     </ModalProvider>
   );
 };

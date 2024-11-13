@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { patchApi, postApi } from "~/Api";
 import AppCloseButton from "~/Components/AppCloseButton";
 import { useModal } from "~/Reducers/modalReducer";
+import { useAlert } from "../../Reducers/AlertReducer";
 
 const Form = ({ data = null, formUrl, method = "post" }) => {
   const [formData, setFormData] = useState({
@@ -28,6 +29,7 @@ const Form = ({ data = null, formUrl, method = "post" }) => {
   const [disable, setDisalbe] = useState(false);
   const [formError, setFormError] = useState(null);
   const { dispatch } = useModal();
+  const alert = useAlert();
   let navigate = useNavigate();
 
   const inputChange = (e) =>
@@ -45,6 +47,8 @@ const Form = ({ data = null, formUrl, method = "post" }) => {
       if (data.success) {
         setDisalbe(false);
         dispatch({ type: method === "post" ? "closeModal" : "closeEditModal" });
+        console.log(data.message);
+        alert.dispatch({ type: "show_alert", payload: data.message });
         navigate("/users");
       }
     } catch (error) {
