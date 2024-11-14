@@ -14,7 +14,7 @@ const Alert = () => {
 
   return (
     <div
-      className={`${state.visible ? "block fixed right-11 top-6" : "hidden"} rounded-md min-w-64 w-fit p-4 bg-green-300 text-green-950`}
+      className={`${state.visible ? "block fixed right-11 top-6" : "hidden"} rounded-md min-w-72 w-fit p-4 bg-green-300 text-green-950`}
     >
       <div className="flex gap-x-8 justify-between items-center">
         <p>{state.message}</p>

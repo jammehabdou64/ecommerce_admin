@@ -11,8 +11,12 @@ export class UserRequest extends FormRequest {
   async rules() {
     return this.apiValidate({
       name: ["required"],
-      email: ["required", `${this.route("users") ? "unique:users" : "next"}`],
-      primary_phone: ["required", "min:7"],
+      email: ["required", `${this.route("user") ? "next" : "unique:users"}`],
+      primary_phone: [
+        "required",
+        "min:7",
+        `${this.route("user") ? "next" : "unique:users"}`,
+      ],
       secondary_phone: ["nullable"],
     });
   }

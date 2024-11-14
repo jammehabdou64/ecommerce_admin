@@ -5229,7 +5229,7 @@ var Alert = function Alert() {
     }
   }, [state]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    className: "".concat(state.visible ? "block fixed right-11 top-6" : "hidden", " rounded-md min-w-64 w-fit p-4 bg-green-300 text-green-950"),
+    className: "".concat(state.visible ? "block fixed right-11 top-6" : "hidden", " rounded-md min-w-72 w-fit p-4 bg-green-300 text-green-950"),
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "flex gap-x-8 justify-between items-center",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
@@ -5640,6 +5640,7 @@ __webpack_require__.r(__webpack_exports__);
 var TableHeader = function TableHeader(_ref) {
   var headers = _ref.headers,
     cssStyle = _ref.cssStyle;
+  console.log(headers);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("tr", {
       children: headers.map(function (header, index) {
