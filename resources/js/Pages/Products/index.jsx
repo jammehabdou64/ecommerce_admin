@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Table from "~/Components/Table";
-// import Spinner from "~/Components/Spinner";
-import { deleteApi, getApi } from "~/Api";
-import Layout from "~/Components/Layout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+import { deleteApi, getApi } from "~/Api";
+import Table from "~/Components/Table";
+import Layout from "~/Components/Layout";
+import PageHeader from "~/Components/PageHeader";
+import AppContainer from "~/Components/AppContainer";
+import AppButton from "~/Components/AppButton";
+import AppModal from "~/Components/AppModal";
+import { useModal } from "~/Reducers/modalReducer";
+
+import CreateProductForm from "./Create";
+import EditProductForm from "./Edit";
 
 const Products = () => {
   const headers = [
@@ -12,16 +19,17 @@ const Products = () => {
     "image",
     "name",
     "category",
-    "brand",
     "quantity",
     "balance",
     "price",
-    // "rating",
+    "description",
     "date",
     "action",
   ];
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentProduct, setCurrentProduct] = useState(null);
+  const { state, dispatch } = useModal();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -29,6 +37,7 @@ const Products = () => {
         const { data } = await getApi("/products");
         setLoading(false);
         if (data.success) {
+          console.log(data.message.data);
           return setProduct(data.message);
         }
       } catch (error) {
@@ -48,74 +57,104 @@ const Products = () => {
       }
     } catch (error) {}
   };
+
+  const showEditProduct = (event, product) => {
+    event.preventDefault();
+    setCurrentProduct(product);
+    console.log(product);
+    dispatch({ type: "openEditModal" });
+    return;
+  };
+
   return (
     <Layout>
       {loading ? (
         <h1>Loading....</h1>
       ) : (
-        <Table columns={headers}>
-          {/* <TableHeader headers={headers} /> */}
-          <tbody className="bg-white divide-y divide-gray-200">
-            {products.map((product, index) => (
-              <tr key={index}>
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {index + 1}
-                </td>
+        <AppContainer>
+          <AppModal openModal={state.isModalOpen}>
+            <CreateProductForm click={() => dispatch({ type: "closeModal" })} />
+          </AppModal>
 
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  <img
-                    src={`/images/product-images/${product?.image}`}
-                    alt={product.name}
-                    className="w-9"
-                  />
-                </td>
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.name}
-                </td>
+          <AppModal openModal={state.isEditModalOpen}>
+            <EditProductForm
+              data={currentProduct}
+              click={() => dispatch({ type: "closeEditModal" })}
+            />
+          </AppModal>
+          <PageHeader title={"Products Page"} />
+          <div>
+            <div className="flex justify-between py-1 items-center">
+              <h4 className="text-2xl font-medium text-gray-600">
+                Products Table
+              </h4>
+              <AppButton
+                title={"New Product"}
+                click={() => dispatch({ type: "openModal" })}
+              />
+            </div>
+          </div>
+          <Table columns={headers}>
+            {/* <TableHeader headers={headers} /> */}
+            <tbody className="bg-white divide-y divide-gray-200">
+              {products?.data.map((product, index) => (
+                <tr key={index}>
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {index + 1}
+                  </td>
 
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.category?.name}
-                </td>
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.brand?.name}
-                </td>
-
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.quantity}
-                </td>
-
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.balance}
-                </td>
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.price}
-                </td>
-                {/* <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.description}
-                </td> */}
-
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  {product.createdAt}
-                </td>
-
-                <td className="px-6 py-2 mr-2 text-sm leading-5 border">
-                  <div className="flex ">
-                    <Link to={"/products/edit/" + product._id}>
-                      <PencilIcon
-                        className="text-blue-500 w-6 cursor-pointer mx-3"
-                        title="edit"
-                      />
-                    </Link>
-                    <TrashIcon
-                      className="text-red-500 w-6 cursor-pointer mx-3"
-                      onClick={() => deleteProduct(product._id)}
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    <img
+                      src={product?.image}
+                      alt={product.name}
+                      className="w-9"
                     />
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+                  </td>
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {product.name}
+                  </td>
+
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {product.category?.name}
+                  </td>
+
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {product.quantity}
+                  </td>
+
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {product.balance}
+                  </td>
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {product.price}
+                  </td>
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {product.description}
+                  </td>
+
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    {product.created_at}
+                  </td>
+
+                  <td className="px-6 py-2 mr-2 text-sm leading-5 border">
+                    <div className="flex ">
+                      <Link to="#" onClick={(e) => showEditProduct(e, product)}>
+                        <PencilIcon
+                          className="text-blue-500 w-6 cursor-pointer mx-3"
+                          title="edit"
+                        />
+                      </Link>
+                      <TrashIcon
+                        className="text-red-500 w-6 cursor-pointer mx-3"
+                        onClick={() => deleteProduct(product.id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </AppContainer>
       )}
     </Layout>
   );

@@ -4,6 +4,7 @@ import session from "express-session";
 // import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
 import flash from "connect-flash";
+import fileUpload from "express-fileupload";
 
 export class Kernel {
   //
@@ -18,5 +19,6 @@ export class Kernel {
       cookie: { maxAge: 60000 },
     }),
     flash(),
+    fileUpload(),
   ];
 }

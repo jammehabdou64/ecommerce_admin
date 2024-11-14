@@ -7,6 +7,8 @@ export class Product extends Model {
     setPrice: this.setPriceAttribute,
     getQuantity: this.getQuantityAttribute,
     setQuantity: this.setQuantityAttribute,
+    getBalance: this.getBalanceAttribute,
+    setBalance: this.setBalanceAttribute,
     created_at: "date",
   };
 
@@ -35,15 +37,16 @@ export class Product extends Model {
   }
 
   private static setBalanceAttribute(value: string, attribute: any) {
-    return Number(value || attribute["quantity"]) * 100;
+    return value ? Number(value) * 100 : attribute["quantity"];
   }
 
   public static booted() {
     //
-    // this.saving((product) => {
-    //   console.log({ product });
-    //   product["balance"] = product["quantity"];
-    // });
+    console.log("object");
+    this.saving((product) => {
+      console.log({ product });
+      // product["balance"] = product["quantity"];
+    });
 
     this.saved((data) => {
       console.log({ saved: data });

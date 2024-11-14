@@ -1,5 +1,6 @@
 import { Request, Response, Next } from "jcc-express-mvc/http";
 import { Product } from "@/Model/Product";
+import { ProductRequest } from "@/Request/ProductRequest";
 
 export class ProductsController {
   /**
@@ -26,8 +27,14 @@ export class ProductsController {
    *@access public
    * @return Express Request Response
    */
-  store(req: Request, res: Response, next: Next) {
+  async store(req: Request, res: Response, next: Next) {
     //
+
+    const productRequest = new ProductRequest(req);
+    const save = await productRequest.save();
+    return save //res.json({ message: save });
+      ? res.json({ message: "Product successfully added!", success: true })
+      : res.json({ message: null, success: false });
   }
 
   /**
@@ -45,8 +52,13 @@ export class ProductsController {
    * @param {id} - string
    * @return Express Request Response
    */
-  update(req: Request, res: Response, next: Next) {
+  async update(req: Request, res: Response, next: Next) {
     //
+    const productRequest = new ProductRequest(req);
+    const save = await productRequest.save();
+    return save //res.json({ message: save });
+      ? res.json({ message: "Product successfully updated!", success: true })
+      : res.json({ message: null, success: false });
   }
 
   /**

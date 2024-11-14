@@ -11,6 +11,7 @@ export class ProductSeeder {
         description: "Soft Drinks",
         price: 20,
         quantity: 100,
+        threshold: "10",
       },
       {
         name: "Facebook",
@@ -18,6 +19,7 @@ export class ProductSeeder {
         description: "Facebook",
         price: 20,
         quantity: 100,
+        threshold: "10",
       },
     ];
     return await Product.create(products);
