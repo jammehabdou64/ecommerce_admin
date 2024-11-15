@@ -41,6 +41,18 @@ const Form = ({ data = null, formUrl, method = "post" }) => {
     getItems();
   }, [data]);
 
+  const resetForm = () => {
+    return SetUserFormData({
+      ...userFormData,
+      category: "",
+      name: "",
+      quantity: "",
+      price: "",
+      threshold: "",
+      description: "",
+    });
+  };
+
   let navigate = useNavigate();
   const [disable, setDisalbe] = useState(false);
   const inputChange = (e) =>
@@ -72,6 +84,7 @@ const Form = ({ data = null, formUrl, method = "post" }) => {
         dispatch({ type: method === "post" ? "closeModal" : "closeEditModal" });
         setDisalbe(false);
         alert.dispatch({ type: "show_alert", payload: data.message });
+        resetForm();
         navigate("/products");
       }
     } catch (error) {

@@ -7621,6 +7621,16 @@ var Form = function Form(_ref) {
     }));
     getItems();
   }, [data]);
+  var resetForm = function resetForm() {
+    return SetUserFormData(_objectSpread(_objectSpread({}, userFormData), {}, {
+      category: "",
+      name: "",
+      quantity: "",
+      price: "",
+      threshold: "",
+      description: ""
+    }));
+  };
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
@@ -7681,6 +7691,7 @@ var Form = function Form(_ref) {
                 type: "show_alert",
                 payload: _data2.message
               });
+              resetForm();
               navigate("/products");
             }
             _context2.next = 30;

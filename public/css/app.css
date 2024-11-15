@@ -631,9 +631,6 @@ video {
 .w-full {
   width: 100%;
 }
-.min-w-64 {
-  min-width: 16rem;
-}
 .min-w-72 {
   min-width: 18rem;
 }
@@ -642,9 +639,6 @@ video {
 }
 .min-w-full {
   min-width: 100%;
-}
-.min-w-7 {
-  min-width: 1.75rem;
 }
 .max-w-6xl {
   max-width: 72rem;

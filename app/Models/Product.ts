@@ -29,6 +29,7 @@ export class Product extends Model {
   }
 
   private static setQuantityAttribute(value: string) {
+    console.log(value);
     return Number(value) * 100;
   }
 
