@@ -29,7 +29,6 @@ export class Product extends Model {
   }
 
   private static setQuantityAttribute(value: string) {
-    console.log(value);
     return Number(value) * 100;
   }
 
@@ -38,19 +37,13 @@ export class Product extends Model {
   }
 
   private static setBalanceAttribute(value: string, attribute: any) {
-    return value ? Number(value) * 100 : attribute["quantity"];
+    return Number(value) * 100;
   }
 
   public static booted() {
     //
-    console.log("object");
     this.saving((product) => {
-      console.log({ product });
-      // product["balance"] = product["quantity"];
-    });
-
-    this.saved((data) => {
-      console.log({ saved: data });
+      product["balance"] = product["quantity"];
     });
   }
 }
